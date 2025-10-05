@@ -29,7 +29,4 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 }
 
-output "kube_config" {
-  value = azurerm_kubernetes_cluster.aks_cluster.kube_config.0.raw_kube_config
-  sensitive = true
-}
+
