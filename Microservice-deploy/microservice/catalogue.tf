@@ -1,3 +1,14 @@
+resource "kubernetes_config_map" "catalogue" {
+  metadata {
+    name      = "catalogue"
+    namespace = kubernetes_namespace.roboshop.metadata[0].name
+  }
+
+  data = {
+    REDIS_HOST = "10.0.0.10"
+  }
+}
+
 resource "kubernetes_deployment" "catalogue" {
   metadata {
     name      = "catalogue"
@@ -26,9 +37,16 @@ resource "kubernetes_deployment" "catalogue" {
       spec {
         container {
           name  = "catalogue"
-          image = "your-catalogue-image:latest"
+          image = "public.ecr.aws/w8x4g9h7/roboshop-v3/catalogue"
+
           port {
             container_port = 8080
+          }
+
+          env_from {
+            config_map_ref {
+              name = kubernetes_config_map.catalogue.metadata[0].name
+            }
           }
         }
       }
@@ -38,13 +56,13 @@ resource "kubernetes_deployment" "catalogue" {
 
 resource "kubernetes_service" "catalogue" {
   metadata {
-    name      = "catalogue-service"
+    name      = "catalogue"
     namespace = kubernetes_namespace.roboshop.metadata[0].name
   }
 
   spec {
     selector = {
-      app = kubernetes_deployment.catalogue.metadata[0].labels.app
+      app = "catalogue"
     }
 
     port {

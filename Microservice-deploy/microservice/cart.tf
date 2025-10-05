@@ -1,11 +1,3 @@
-# Namespace (make sure roboshop exists, else Terraform will create it)
-resource "kubernetes_namespace" "roboshop" {
-  metadata {
-    name = "roboshop"
-  }
-}
-
-# ConfigMap
 resource "kubernetes_config_map" "cart" {
   metadata {
     name      = "cart"
@@ -19,7 +11,6 @@ resource "kubernetes_config_map" "cart" {
   }
 }
 
-# Deployment
 resource "kubernetes_deployment" "cart" {
   metadata {
     name      = "cart"
@@ -65,7 +56,6 @@ resource "kubernetes_deployment" "cart" {
   }
 }
 
-# Service
 resource "kubernetes_service" "cart" {
   metadata {
     name      = "cart"

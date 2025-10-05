@@ -26,7 +26,8 @@ resource "kubernetes_deployment" "shipping" {
       spec {
         container {
           name  = "shipping"
-          image = "your-shipping-image:latest"
+          image = "public.ecr.aws/w8x4g9h7/roboshop-v3/shipping"
+
           port {
             container_port = 8080
           }
@@ -38,13 +39,13 @@ resource "kubernetes_deployment" "shipping" {
 
 resource "kubernetes_service" "shipping" {
   metadata {
-    name      = "shipping-service"
+    name      = "shipping"
     namespace = kubernetes_namespace.roboshop.metadata[0].name
   }
 
   spec {
     selector = {
-      app = kubernetes_deployment.shipping.metadata[0].labels.app
+      app = "shipping"
     }
 
     port {

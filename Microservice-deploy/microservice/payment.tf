@@ -26,7 +26,8 @@ resource "kubernetes_deployment" "payment" {
       spec {
         container {
           name  = "payment"
-          image = "your-payment-image:latest"
+          image = "public.ecr.aws/w8x4g9h7/roboshop-v3/payment"
+
           port {
             container_port = 8080
           }
@@ -38,13 +39,13 @@ resource "kubernetes_deployment" "payment" {
 
 resource "kubernetes_service" "payment" {
   metadata {
-    name      = "payment-service"
+    name      = "payment"
     namespace = kubernetes_namespace.roboshop.metadata[0].name
   }
 
   spec {
     selector = {
-      app = kubernetes_deployment.payment.metadata[0].labels.app
+      app = "payment"
     }
 
     port {

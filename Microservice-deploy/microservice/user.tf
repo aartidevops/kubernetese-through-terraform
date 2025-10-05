@@ -26,7 +26,8 @@ resource "kubernetes_deployment" "user" {
       spec {
         container {
           name  = "user"
-          image = "your-user-image:latest"
+          image = "public.ecr.aws/w8x4g9h7/roboshop-v3/user"
+
           port {
             container_port = 8080
           }
@@ -38,13 +39,13 @@ resource "kubernetes_deployment" "user" {
 
 resource "kubernetes_service" "user" {
   metadata {
-    name      = "user-service"
+    name      = "user"
     namespace = kubernetes_namespace.roboshop.metadata[0].name
   }
 
   spec {
     selector = {
-      app = kubernetes_deployment.user.metadata[0].labels.app
+      app = "user"
     }
 
     port {
