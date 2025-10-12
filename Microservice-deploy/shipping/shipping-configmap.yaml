@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shipping
+data:
+  APP_GIT_URL: "https://github.com/roboshop-devops-project-v3/shipping"
+  CART_ENDPOINT: "cart:8080"
+  DB_HOST: "10.0.0.12"
+  DB_PASS: "RoboShop@1"
+  DB_TYPE: "mysql"
+  DB_USER: "root"

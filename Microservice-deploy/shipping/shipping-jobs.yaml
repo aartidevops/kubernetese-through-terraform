@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: shipping-schema-app-user
+spec:
+  template:
+    spec:
+      containers:
+        - name: shipping-schema-app-user
+          image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+          env:
+            - name: SCHEMA_FILE
+              value: "db/app-user.sql"
+          envFrom:
+            - configMapRef:
+                name: shipping
+      restartPolicy: Never
+  backoffLimit: 1
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: shipping-schema-schema
+spec:
+  template:
+    spec:
+      containers:
+        - name: shipping-schema-schema
+          image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+          env:
+            - name: SCHEMA_FILE
+              value: "db/schema.sql"
+          envFrom:
+            - configMapRef:
+                name: shipping
+      restartPolicy: Never
+  backoffLimit: 1
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: shipping-schema-master-data
+spec:
+  template:
+    spec:
+      containers:
+        - name: shipping-schema-master-data
+          image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+          env:
+            - name: SCHEMA_FILE
+              value: "db/master-data.sql"
+          envFrom:
+            - configMapRef:
+                name: shipping
+      restartPolicy: Never
+  backoffLimit: 1

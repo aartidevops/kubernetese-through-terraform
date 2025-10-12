@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: catalogue-schema
+  namespace: roboshop
+spec:
+  template:
+    spec:
+      containers:
+        - name: catalogue-schema
+          image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+          envFrom:
+            - configMapRef:
+                name: catalogue
+      restartPolicy: Never
+  backoffLimit: 1

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cart
+data:
+  REDIS_HOST: "10.0.0.10"
+  CATALOGUE_HOST: catalogue
+  CATALOGUE_PORT: "8080"
