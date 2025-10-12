@@ -1,7 +1,8 @@
-#!/bin/bash
-set -e
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+sudo yum install -y terraform
+terraform -version
 
-# ---------------------------
 # Install Azure CLI (RHEL 9)
 # ---------------------------
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -25,19 +26,3 @@ if [ ! -f /usr/bin/kubectl ]; then
 fi
 
 kubectl version --client
-
-# ---------------------------
-# Connect to AKS cluster
-# ---------------------------
-az login
-az account set --subscription "0aa6e6f6-6e44-47f7-b30d-2aa0dfd4e5f4"
-
-# ⚠️ Replace RG and NAME with actual values from `az aks list`
-az aks get-credentials --resource-group RG --name aks-cluster
-
-# ---------------------------
-# Verify cluster connection
-# ---------------------------
-kubectl get nodes
-kubectl get pods -A
-
