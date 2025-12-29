@@ -1,3 +1,7 @@
+#!/bin/bash
+set -e
+
+
 #Create a Resource Group
 
 az group create --name RG --location ukwest
@@ -12,6 +16,13 @@ az storage account create \
       --name tfstate \
       --account-name rttfstatestorage \
       --auth-mode login
+
+
+# Create anemone container
+az storage container create \
+  --name vault-state \
+  --account-name rttfstatestorage \
+  --auth-mode login
 
 
 
