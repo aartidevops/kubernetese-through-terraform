@@ -26,7 +26,11 @@ az storage container create \
 
 
 
-
+# Create anemone container
+az storage container create \
+  --name vault-secret-state \
+  --account-name rttfstatestorage \
+  --auth-mode login
 
 
 
